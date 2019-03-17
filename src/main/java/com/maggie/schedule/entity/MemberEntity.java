@@ -21,7 +21,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MemberEntity extends CommonEntity{
+public class MemberEntity extends CommonEntity {
 
 	/** The member id. */
 	@Id
