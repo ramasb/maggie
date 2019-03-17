@@ -7,6 +7,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +30,8 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping(ControllerHelper.MEMBER_PATH)
 @Api("This controller contains endpoints to manage schedules for a member")
+
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class MemberSchedulingController {
 
 	/** The schedule service. */
@@ -44,9 +48,9 @@ public class MemberSchedulingController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation("This endpoint retrieve schedules for a member")
-	public List<ScheduleEntity> retrieveSchedules(@PathVariable("memberid") Long memberid) {
+	public ResponseEntity retrieveSchedules(@PathVariable("memberid") Long memberid) {
 		List<ScheduleEntity> schedules = scheduleService.retrieveSchedules(memberid);
-		return schedules;
+		return new ResponseEntity(schedules, HttpStatus.OK);
 	}
 
 	/**
@@ -61,8 +65,8 @@ public class MemberSchedulingController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation("This endpoint will add schedule for a member")
-	public ScheduleEntity addSchedule(@RequestBody ScheduleEntity schedule, @PathVariable("memberid") Long memberid) {
-		return scheduleService.saveSchedule(schedule);
+	public ResponseEntity addSchedule(@RequestBody ScheduleEntity schedule, @PathVariable("memberid") Long memberid) {
+		return new ResponseEntity(scheduleService.saveSchedule(schedule), HttpStatus.OK);
 	}
 
 	/**
@@ -78,9 +82,9 @@ public class MemberSchedulingController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation("This endpoint will update schedule for a member")
-	public ScheduleEntity updateSchedule(@RequestBody ScheduleEntity schedule, @PathVariable("memberid") Long memberid,
+	public ResponseEntity updateSchedule(@RequestBody ScheduleEntity schedule, @PathVariable("memberid") Long memberid,
 			@PathVariable("scheduleid") Long scheduleid) {
-		return scheduleService.saveSchedule(schedule);
+		return new ResponseEntity(scheduleService.saveSchedule(schedule), HttpStatus.OK);
 	}
 
 	/**
@@ -95,8 +99,8 @@ public class MemberSchedulingController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation("This endpoint retrieve schedule of a member")
-	public ScheduleEntity retrieveSchedule(@PathVariable("memberid") Long memberid,
+	public ResponseEntity retrieveSchedule(@PathVariable("memberid") Long memberid,
 			@PathVariable("scheduleid") Long scheduleid) {
-		return scheduleService.retrieveSchedule(scheduleid);
+		return new ResponseEntity(scheduleService.retrieveSchedule(scheduleid), HttpStatus.OK);
 	}
 }

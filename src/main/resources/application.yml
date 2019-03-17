@@ -15,7 +15,9 @@ spring:
   h2:
     console:
       enabled: true
-
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
 info:
   app:
     name: "Member scheduling project"
